@@ -34,6 +34,16 @@ const HeaderComponent = () => {
                         }
 
                     </ul>
+                    <ul className='navbar-nav'>
+
+                        
+              <li className='nav-item'>
+             <NavLink to="/appointments" className="nav-link">Appointment</NavLink>
+             </li>
+
+
+</ul>
+
 
                 </div>
                 <ul className='navbar-nav'>
