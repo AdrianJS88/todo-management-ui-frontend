@@ -3,8 +3,10 @@ import { useState } from 'react'
 import { getAppointment, saveAppointment, updateAppointment } from '../services/AppointmentService'
 import { useNavigate, useParams } from 'react-router-dom'
 
-const AppointmentComponent = () => {
 
+const AppointmentComponent = () => {
+   
+   
     const [date_appointment, setAppointment] = useState('')
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
@@ -67,10 +69,26 @@ const AppointmentComponent = () => {
                 { pageTitle() }
                 <div className='card-body'>
                     <form>
-                         <div className='form-group mb-2'>
-                      
-                          
-                        </div> 
+                    <div className='form-group mb-2'>
+                            <label className='form-label'>Appointment Date:</label>
+                            <input
+                                type='datetime-local'
+                                
+                                className='form-control'
+                                placeholder='Enter appointment Date'
+                                name='date'
+                                value={date_appointment}
+                                
+                                onChange={(e) => setAppointment(e.target.value)}
+                            >
+                            </input>
+                        </div>
+
+                    
+                
+
+
+
 
                         <div className='form-group mb-2'>
                             <label className='form-label'>Appointment Name:</label>
@@ -99,7 +117,7 @@ const AppointmentComponent = () => {
                         </div>
 
                       
-
+                         
                         <button className='btn btn-success' onClick={ (e) => saveOrUpdateAppointment(e)}>Submit</button>
                     </form>
 
