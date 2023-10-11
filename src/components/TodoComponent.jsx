@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useState } from 'react'
+import { useState } from 'react'//hook
 import { getTodo, saveTodo, updateTodo } from '../services/TodoService'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -20,7 +20,7 @@ const TodoComponent = () => {
 
         if(id){
 
-            updateTodo(id, todo).then((response) => {
+            updateTodo(id, todo).then(() => {
                 navigate('/todos')
             }).catch(error => {
                 console.error(error);

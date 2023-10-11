@@ -1,27 +1,50 @@
 import React, { useEffect, useState } from 'react'
-import {  deleteAppointment, getAllAppointments } from '../services/AppointmentService'
+import {  deleteAppointment, getAllAppointments  } from '../services/AppointmentService'
 import { useNavigate } from 'react-router-dom'
-import { isAdminUser } from '../services/AuthService'
+import { getLoggedInUser, isAdminUser } from '../services/AuthService'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ListAppointmentComponent = () => {
-
+  
     const [appointments, setAppointments] = useState([])
 
     const navigate = useNavigate()
-
+  
    const isAdmin = isAdminUser();
 
+   const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+
+  const handleSearch = () => {
+    const username = sessionStorage.getItem("authenticatedUser");
+
+    const filteredAppointments = appointments.filter(appointment =>
+      appointment.appointment_u_name.toLowerCase() === getLoggedInUser(searchTerm.toLowerCase()) 
+      
+    );
+   
+    setSearchResults(filteredAppointments);
+  };
+
+
+
+
     useEffect(() => {
+     
         listAppointments();
     }, [])
     
     function listAppointments(){
-        getAllAppointments().then((response) => {
+     
+         getAllAppointments(). then((response) => {
             setAppointments(response.data);
         }).catch(error => {
             console.error(error);
         });
     }
+
+
 
     function addNewAppointment(){
         navigate('/add-appointment')
@@ -31,11 +54,13 @@ const ListAppointmentComponent = () => {
     function updateAppointment(id){
         console.log(id)
         navigate(`/update-appointment/${id}`)
+        window.location.reload(false);
     }
     
     function removeAppointment(id){
         deleteAppointment(id).then((response) => {
             listAppointments();
+            window.location.reload(false);
         }).catch(error => {
             console.error(error)
         })
@@ -43,21 +68,25 @@ const ListAppointmentComponent = () => {
 
 
   return (
-    <div className='container'>
-        <h2 className='text-center'>List of Appointments</h2>
-      
+    
+    <div className='container' >
+     
+        <h2 className='text-center'>Appointments List</h2>
+        
          <button className='btn btn-primary mb-2' onClick={addNewAppointment}>Add Appointment</button>
-       
-       
+        
        
        
         <div>
+          {isAdmin &&
             <table className='table table-bordered table-striped'>
-                <thead>
+                <thead className='appoint' >
                     <tr>
-                        <th>Appointment Date</th>
-                        <th>Appointment Name</th>
-                        <th>Appointment Price</th>
+                       
+                        <th>Appointment Type Name</th>
+                        <th>Appointment Date/Time</th>
+                        <th>Appointment Username</th>
+                        {/* <th>Appointment appointment_user_id</th> */}
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -65,9 +94,10 @@ const ListAppointmentComponent = () => {
                     {
                         appointments.map(appointment => 
                             <tr key={appointment.id}>
+                               <td>{appointment.name}</td>
                                 <td>{appointment.date_appointment}</td>
-                                <td>{appointment.name}</td>
-                                <td>{appointment.price}</td>
+                                 <td>{appointment.appointment_u_name}</td>
+                               {/* <td>{appointment.appointment_user_id}</td> */}
                                 <td>
                              
                               <button className='btn btn-info' onClick={() => updateAppointment(appointment.id)}>Update</button>
@@ -75,7 +105,7 @@ const ListAppointmentComponent = () => {
                                 
                          <button className='btn btn-danger' onClick={() => removeAppointment(appointment.id)} style={ { marginLeft: "10px" }} >Delete</button>
                        
-                                 
+                        
                                 </td>
                             </tr>
                         )
@@ -83,9 +113,74 @@ const ListAppointmentComponent = () => {
 
                 </tbody>
             </table>
+        }
         </div>
+           
+         <div>
+        <div className="mb-3">
+        <label htmlFor="searchName" className="form-label">Enter Appointment Name:</label>
 
+        <input
+          type="text"
+          className="form-control"
+          id="searchName"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+          <button className="btn btn-primary" onClick={handleSearch}>Search</button>
+          
+      </div>
+    
+
+      <div className="container text-center-3">
+        
+        <ul>
+          {searchResults.map(appointment => (
+            <li key={appointment.id}>
+<table className="table "  >
+  
+<thead className="table-dark">
+  
+    <tr>
+      <th scope="col"> Nume user programare:</th>
+      <th scope="col">Tip Programare:</th>
+      <th scope="col"> Data/ora Programare:</th>
+      <th scope="col"> Actions</th>
+      {/* <th scope="col"> user id appoint : </th> */}
+     </tr>
+     </thead>
+  <tbody>
+    <tr>
+     <td> {appointment.appointment_u_name}</td>
+      <td> {appointment.name}</td>
+      <td> {appointment.date_appointment}</td>
+      {/* <td> {appointment.appointment_user_id}</td> */}
+      <td>             
+    <button className='btn btn-info' onClick={() => updateAppointment(appointment.id)}>Update</button>
+      
+                   <button className='btn btn-danger' onClick={() => removeAppointment(appointment.id)} style={ { marginLeft: "10px" }} >Delete</button>                      
+                   </td>
+    </tr>
+   
+  </tbody>
+ 
+</table>
+
+
+
+
+            </li>
+          ))}
+          
+        </ul>
+      </div>
+    </div>     
     </div>
+
+
+
+
+
   )
 }
 

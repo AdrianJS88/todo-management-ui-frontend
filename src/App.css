@@ -1,9 +1,35 @@
+.navbar-brand{
+  position: sticky;
+  background-color: rgba(7, 152, 189, 0.641);
+  width: 10px;
+}
+
+.nav-link{
+  position: sticky;
+  background-color: #cd0505;
+  width:100%;
+  
+}
+
+.container{
+  background-color: rgb(235, 237, 229);
+  width:100%;
+}
+
 .footer {
-  position: absolute;
+  position: static;
   bottom: 0;
   width:100%;
   height: 50px;
-  background-color: black;
-  text-align: center;
-  color: white;
+  background-color: rgba(153, 153, 139, 0.784);
+  text-align: justify;
+  color: rgb(11, 9, 5);
+  
 }
+.todotitle{
+  color: #cd0505;
+}
+.appoint{
+  color: #f87c00;
+}
+

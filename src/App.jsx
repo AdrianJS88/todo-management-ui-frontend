@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import ListTodoComponent from './components/ListTodoComponent'
 import TodoComponent from './components/TodoComponent'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import ListAppointmentComponent from './components/ListAppointmentComponent'
 import AppointmentComponent from './components/AppointmentComponent'
@@ -18,10 +19,11 @@ import { isUserLoggedIn } from './services/AuthService'
 function App() {
 
   function AuthenticatedRoute({children}){
-
+      
     const isAuth = isUserLoggedIn();
 
     if(isAuth) {
+     
       return children;
     }
 
@@ -67,8 +69,6 @@ function App() {
                 <AppointmentComponent /> 
                 </AuthenticatedRoute>
               }></Route>
-
-
 
 
               {/* http://localhost:8080/update-todo/1 */}

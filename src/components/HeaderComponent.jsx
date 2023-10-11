@@ -17,15 +17,22 @@ const HeaderComponent = () => {
   return (
     <div>
         <header>
+          
             <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
+
+                <div>
+             
+                </div>
+                
                 <div>
                     <a href='http://localhost:3000' className='navbar-brand'>
-                        Todo Management Application
+                       Barber Appointment System
                     </a>
                 </div>
                 <div className='collapse navbar-collapse'>
+               
                     <ul className='navbar-nav'>
-
+                  
                         {
                             isAuth &&                         
                             <li className='nav-item'>
@@ -42,15 +49,14 @@ const HeaderComponent = () => {
                    <NavLink to="/appointments" className="nav-link">Appointment</NavLink>
                    </li>
                     }
+                    
                    </ul>
-
-
-
-
-
-
-                </div>
+                   </div>
+            
+               
+               
                 <ul className='navbar-nav'>
+                    
                     {
                         !isAuth &&                         
                         <li className='nav-item'>
@@ -75,9 +81,13 @@ const HeaderComponent = () => {
                     </ul>
             </nav>
         </header>
-
-    </div>
+        <div>
+    
+      </div>
+       </div>
+    
   )
+  
 }
 
 export default HeaderComponent

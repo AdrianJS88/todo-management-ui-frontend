@@ -9,7 +9,7 @@ const AppointmentComponent = () => {
    
     const [date_appointment, setAppointment] = useState('')
     const [name, setName] = useState('')
-    const [price, setPrice] = useState('')
+    const [appointment_u_name, setAppointment_u_name] = useState('')
     const navigate = useNavigate()
     const { id } = useParams()
 
@@ -17,7 +17,7 @@ const AppointmentComponent = () => {
     function saveOrUpdateAppointment(e){
         e.preventDefault()
 
-        const appointment = {date_appointment, name, price}
+        const appointment = {date_appointment, name ,appointment_u_name}
         console.log(appointment);
 
         if(id){
@@ -53,7 +53,7 @@ const AppointmentComponent = () => {
                 console.log(response.data)
                 setAppointment(response.data.date_appointment)
                 setName(response.data.name)
-                setPrice(response.data.price)
+                setAppointment_u_name(response.data.appointment_u_name)
             }).catch(error => {
                 console.error(error);
             })
@@ -84,37 +84,40 @@ const AppointmentComponent = () => {
                             </input>
                         </div>
 
-                    
-                
-
-
-
 
                         <div className='form-group mb-2'>
-                            <label className='form-label'>Appointment Name:</label>
-                            <input
-                                type='text'
+                            <label className='form-label'>Alege un tip Programare:</label>
+                            <select
+                                type='submit'
                                 className='form-control'
-                                placeholder='Enter appointment NAME'
+                                placeholder='Enter appointment tip'
                                 name='name'
                                 value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                 onChange={(e) => setName(e.target.value)}
+                           >
+                             <option value='Alege tip programare'>Alege aici </option>
+                            <option value='Tuns'>Tuns </option>
+                            <option value='tuns + barba'>tuns + barba </option>
+                            <option value='tuns copii 12 ani'>tuns copii 12 ani </option>
+                            </select> 
+                        </div>
+                      
+
+                        <div className='form-group mb-2'>
+                            <label className='form-label'>Appointment user Name:</label>
+                            <input
+                                type='text'
+                                className='form-control'
+                                placeholder='Enter user NAME'
+                                name='appointment_u_name'
+                                value={appointment_u_name}
+                                onChange={(e) => setAppointment_u_name(e.target.value)}
                             >
                             </input>
                         </div>
 
-                        <div className='form-group mb-2'>
-                            <label className='form-label'>Appointment price:</label>
-                            <input
-                                type='text'
-                                className='form-control'
-                                placeholder='Enter appointment price'
-                                name='price'
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
-                            >
-                            </input>
-                        </div>
+                       
+                       
 
                       
                          

@@ -9,7 +9,9 @@ const ListTodoComponent = () => {
 
     const navigate = useNavigate()
 
-   const isAdmin = isAdminUser();
+    const isAdmin = isAdminUser();
+
+
 
     useEffect(() => {
         listTodos();
@@ -59,19 +61,20 @@ const ListTodoComponent = () => {
 
   return (
     <div className='container'>
+        <img src="todo.jpg" alt="Italian Trulli"  width="1300" height="400" ></img>
         <h2 className='text-center'>List of Todos</h2>
        {
         isAdmin && 
          <button className='btn btn-primary mb-2' onClick={addNewTodo}>Add Todo</button>
        }
-       
-       
+          
+        
        
         <div>
             <table className='table table-bordered table-striped'>
-                <thead>
+                <thead className='todotitle'>
                     <tr>
-                        <th>Todo Title</th>
+                        <th >Todo Title</th>
                         <th>Todo Description</th>
                         <th>Todo Completed</th>
                         <th>Actions</th>
