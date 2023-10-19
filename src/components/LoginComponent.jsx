@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { loginAPICall, saveLoggedInUser, storeToken } from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
+import { autocompleteClasses } from '@mui/material';
+
 
 const LoginComponent = () => {
 
@@ -33,7 +35,13 @@ const LoginComponent = () => {
     }
 
   return (
-    <><img src="wp3066972.jpg" alt="Italian Trulli" width="1920" height="400"></img><div className='container'>
+    <>
+    
+    <div> </div>
+   
+    
+    
+    <div className='lg'>
         
           <br /> <br />
           <div className='row'>
@@ -85,8 +93,11 @@ const LoginComponent = () => {
                                   <button className='btn btn-primary' onClick={(e) => handleLoginForm(e)}>Submit</button>
 
                               </div>
-                          </form>
 
+                          </form>
+                         <div  >
+                         <img src='wp3066972.jpg' width={autocompleteClasses} height={400}></img>
+                         </div>
                       </div>
 
                   </div>
@@ -96,8 +107,11 @@ const LoginComponent = () => {
           </div>
 
 
-      </div></>
+      </div ></>
+      
+      
   )
+  
 }
 
 export default LoginComponent

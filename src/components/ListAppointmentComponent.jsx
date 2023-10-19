@@ -3,6 +3,7 @@ import {  deleteAppointment, getAllAppointments  } from '../services/Appointment
 import { useNavigate } from 'react-router-dom'
 import { getLoggedInUser, isAdminUser } from '../services/AuthService'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { autocompleteClasses } from '@mui/material';
 
 const ListAppointmentComponent = () => {
   
@@ -69,18 +70,20 @@ const ListAppointmentComponent = () => {
 
   return (
     
-    <div className='container' >
+    <div className='card-lg' >
      
         <h2 className='text-center'>Appointments List</h2>
         
          <button className='btn btn-primary mb-2' onClick={addNewAppointment}>Add Appointment</button>
         
-       
+    
        
         <div>
           {isAdmin &&
             <table className='table table-bordered table-striped'>
+            
                 <thead className='appoint' >
+                
                     <tr>
                        
                         <th>Appointment Type Name</th>
@@ -116,65 +119,52 @@ const ListAppointmentComponent = () => {
         }
         </div>
            
-         <div>
-        <div className="mb-3">
-        <label htmlFor="searchName" className="form-label">Enter Appointment Name:</label>
-
-        <input
-          type="text"
-          className="form-control"
-          id="searchName"
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-        />
-          <button className="btn btn-primary" onClick={handleSearch}>Search</button>
-          
-      </div>
+    <div>
+  <div className="mb-3">
+    <label htmlFor="searchName" className="form-label">Enter Appointment Name:</label>
+    <input
+      type="text"
+      className="form-control"
+      id="searchName"
+      value={searchTerm}
+      onChange={e => setSearchTerm(e.target.value)}
+    />
+    <button className="btn btn-primary" onClick={handleSearch}>Search</button>
     
+  </div>
 
-      <div className="container text-center-3">
+  <div className="container text-center-3">
+    <table className="table">
+      <thead className="table-dark">
+       
+        <tr>
+          <th scope="col">Nume client :</th>
+          <th scope="col">Tip Programare:</th>
+          <th scope="col">Data/ora Programare:</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {searchResults.map(appointment => (
+          <tr key={appointment.id}>
+            <td>{appointment.appointment_u_name}</td>
+            <td>{appointment.name}</td>
+            <td>{appointment.date_appointment}</td>
+            <td>
+              <button className='btn btn-info' onClick={() => updateAppointment(appointment.id)}>Update</button>
+              <button className='btn btn-danger' onClick={() => removeAppointment(appointment.id)} style={{ marginLeft: "10px" }}>Delete</button>
+            </td>
+          </tr>
+        ))}
         
-        <ul>
-          {searchResults.map(appointment => (
-            <li key={appointment.id}>
-<table className="table "  >
-  
-<thead className="table-dark">
-  
-    <tr>
-      <th scope="col"> Nume user programare:</th>
-      <th scope="col">Tip Programare:</th>
-      <th scope="col"> Data/ora Programare:</th>
-      <th scope="col"> Actions</th>
-      {/* <th scope="col"> user id appoint : </th> */}
-     </tr>
-     </thead>
-  <tbody>
-    <tr>
-     <td> {appointment.appointment_u_name}</td>
-      <td> {appointment.name}</td>
-      <td> {appointment.date_appointment}</td>
-      {/* <td> {appointment.appointment_user_id}</td> */}
-      <td>             
-    <button className='btn btn-info' onClick={() => updateAppointment(appointment.id)}>Update</button>
+      </tbody>
       
-                   <button className='btn btn-danger' onClick={() => removeAppointment(appointment.id)} style={ { marginLeft: "10px" }} >Delete</button>                      
-                   </td>
-    </tr>
-   
-  </tbody>
- 
-</table>
-
-
-
-
-            </li>
-          ))}
-          
-        </ul>
-      </div>
-    </div>     
+    </table>
+    
+  </div>
+  
+</div>
+    <img src='wp3066953.jpg' width={autocompleteClasses} height={autocompleteClasses}></img>
     </div>
 
 

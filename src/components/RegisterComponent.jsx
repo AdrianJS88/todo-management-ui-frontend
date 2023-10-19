@@ -36,7 +36,7 @@ const RegisterComponent = () => {
     <div className='container'>
           <br /> <br />
           <div className='row'>
-              <div className='col-md-6 offset-md-6'>
+              <div className='col-sm-12 my-auto'>
                   <div className='card'>
                       <div className='card-header'>
                           <h2 className='text-center'> User Registration Form </h2>

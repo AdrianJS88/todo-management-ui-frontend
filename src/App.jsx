@@ -18,6 +18,7 @@ import { isUserLoggedIn } from './services/AuthService'
 
 function App() {
 
+
   function AuthenticatedRoute({children}){
       
     const isAuth = isUserLoggedIn();
