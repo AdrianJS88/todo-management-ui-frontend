@@ -3,10 +3,9 @@ import { useState } from 'react'
 import { getAppointment, saveAppointment, updateAppointment } from '../services/AppointmentService'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { format } from 'date-fns'; // Import the date formatting library you're using
 
 const AppointmentComponent = () => {
-   const nowInBucharest = new Date().toLocaleString("en-US", { timeZone: "Europe/Bucharest" });
+   
 
    
     const [date_appointment, setAppointment] = useState('')
@@ -16,31 +15,42 @@ const AppointmentComponent = () => {
     const navigate = useNavigate()
     const { id } = useParams()
      
-
-
+    
 
 
     function saveOrUpdateAppointment(e){
         e.preventDefault()
-  
-      const threeHoursAgo = new Date(nowInBucharest);
-threeHoursAgo.setHours(threeHoursAgo.getHours() - 3);
-const day = String(threeHoursAgo.getDate()).padStart(2, '0');
-const month = String(threeHoursAgo.getMonth() + 1).padStart(2, '0');
-const year = threeHoursAgo.getFullYear();
-const hours = String(threeHoursAgo.getHours()).padStart(2, '0');
-const minutes = String(threeHoursAgo.getMinutes()).padStart(2, '0');
-const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}`;
-// Convertește data în formatul potrivit pentru MySQL (de ex., 'YYYY-MM-DD HH:MM:SS')
-// const formattedDate = threeHoursAgo.toISOString().slice(0, 19).replace('T', ' ');
+ 
+  // Parse the input date string into a JavaScript Date object
+  const inputDate = new Date(date_appointment);
 
-      setAppointment(formattedDate);
-        const appointment = {
-            date_appointment : formattedDate,
-             name ,
-             appointment_u_name
-             };
-        console.log(appointment);
+  // Create a function to format the date in the desired format
+  const formatDate = (date) => {
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Month is zero-based, so we add 1
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    // Ensure two-digit formatting for day, month, hours, and minutes
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedHours = hours < 10 ? `0${hours}` : hours;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    return `${formattedDay}-${formattedMonth}-${year} ${formattedHours}:${formattedMinutes}`;
+  };
+
+  // Format the date
+  const formattedDate = formatDate(inputDate);
+
+  const appointment = {
+    date_appointment: formattedDate,
+    name,
+    appointment_u_name,
+  };
+
+  console.log(appointment);
           
 
  

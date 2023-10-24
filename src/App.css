@@ -112,4 +112,12 @@
 }
 
 
+.unavailable-event {
+  background-color: red;
+  cursor: not-allowed;
+}
+
+.available-event {
+  background-color: green; /* Change to your desired color */
+}
 
