@@ -9,7 +9,7 @@ const RegisterComponent = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigator = useNavigate();
-    
+    const [error, setError] = useState('');
 
     function handleRegistrationForm(e){
 
@@ -27,6 +27,7 @@ const RegisterComponent = () => {
             window.location.reload(false);
         }).catch(error => {
             console.error(error);
+            setError('Format email gresit!!!');
         })
     }
         
@@ -34,6 +35,7 @@ const RegisterComponent = () => {
     <><img src="register.jpg" alt="Italian Trulli" width="1920" height="400"></img>
     
     <div className='container'>
+     
           <br /> <br />
           <div className='row'>
               <div className='col-sm-12 my-auto'>
@@ -45,6 +47,7 @@ const RegisterComponent = () => {
                       <div className='card-body'>
                           <form>
                               <div className='row mb-3'>
+                              
                                   <label className='col-md-3 control-label'> Name </label>
                                   <div className='col-md-9'>
                                       <input
@@ -76,6 +79,7 @@ const RegisterComponent = () => {
 
 
                               <div className='row mb-3'>
+                               {error && <div className="alert alert-danger">{error}</div>}
                                   <label className='col-md-3 control-label'> Email </label>
                                   <div className='col-md-9'>
                                       <input

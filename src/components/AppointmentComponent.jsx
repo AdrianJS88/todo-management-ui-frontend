@@ -2,52 +2,48 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { getAppointment, saveAppointment, updateAppointment } from '../services/AppointmentService'
 import { useNavigate, useParams } from 'react-router-dom'
-
-
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { format} from 'date-fns';
+import DatePicker from 'react-datepicker';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import axios from 'axios';
+import moment from 'moment-timezone';
 const AppointmentComponent = () => {
-   
+    const [error, setError] = useState('');
 
    
-    const [date_appointment, setAppointment] = useState('')
-  
+    const [date_appointment, setAppointment] = useState()
+
     const [name, setName] = useState('')
     const [appointment_u_name, setAppointment_u_name] = useState('')
     const navigate = useNavigate()
     const { id } = useParams()
-     
+     const localizer = momentLocalizer(moment);
+// const [availableAppointments, setAvailableAppointments] = useState([]);
+  
+  //////////////////////////////
+ const [timeZone, setTimeZone] = useState('');
+
+
     
-
-
+//////////////////////
     function saveOrUpdateAppointment(e){
         e.preventDefault()
- 
-  // Parse the input date string into a JavaScript Date object
-  const inputDate = new Date(date_appointment);
+     
+  //const formattedDate = moment(date_appointment).tz('Europe/Bucharest').format('YYYY-MM-DDTHH:mm:ss');
 
-  // Create a function to format the date in the desired format
-  const formatDate = (date) => {
-    const day = date.getDate();
-    const month = date.getMonth() + 1; // Month is zero-based, so we add 1
-    const year = date.getFullYear();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+   const formattedDate = format(new Date(date_appointment), 'dd-MM-yyyy HH:mm');
 
-    // Ensure two-digit formatting for day, month, hours, and minutes
-    const formattedDay = day < 10 ? `0${day}` : day;
-    const formattedMonth = month < 10 ? `0${month}` : month;
-    const formattedHours = hours < 10 ? `0${hours}` : hours;
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
-    return `${formattedDay}-${formattedMonth}-${year} ${formattedHours}:${formattedMinutes}`;
-  };
 
-  // Format the date
-  const formattedDate = formatDate(inputDate);
 
   const appointment = {
     date_appointment: formattedDate,
     name,
     appointment_u_name,
+    
+
   };
 
   console.log(appointment);
@@ -93,12 +89,14 @@ const AppointmentComponent = () => {
         
 
         if(id){
-            getAppointment(id).then((response) => {
+            getAppointment(id)
+            .then((response) => {
+                
                 console.log(response.data)
-                setAppointment(response.data.date_appointment)
+                 setAppointment(parseISO(response.data.date_appointment));
                 setName(response.data.name)
                 setAppointment_u_name(response.data.appointment_u_name)
-                
+              
             }).catch(error => {
                 console.error(error);
             })
@@ -107,6 +105,7 @@ const AppointmentComponent = () => {
     }, [id])
 
   return (
+    
     
     <div className='container'>
          
@@ -120,21 +119,29 @@ const AppointmentComponent = () => {
                 <div className='registration-form-container'>
                   
                     <form>
-               <div className="form-group mb-2">
-      <label className="form-label" htmlFor="datetime">
-        Appointment Date:
-      </label>
-      <input
-        type="datetime-local"
-        id="datetime"
-        step="3600"
-        className="form-control"
-        placeholder="Enter appointment Date"
-        name="date"
-        value={date_appointment}  
-        onChange={(e) => setAppointment(e.target.value)}
-     
-      />
+                    
+               <div >
+   
+       
+   <div>
+   <label htmlFor="appointmentDate">Select Date and Time:</label>
+   <br></br>
+<DatePicker
+    id="appointmentDate" 
+    placeholderText='Select Date and Time'
+    selected={date_appointment}
+    onChange={date => setAppointment(date)}
+    showTimeSelect
+    timeFormat="HH:mm"
+    timeIntervals={60}
+    dateFormat="dd-MM-yyyy HH:mm"
+/>
+
+  
+</div>
+
+      
+
     </div>
 
 
@@ -149,7 +156,7 @@ const AppointmentComponent = () => {
                                 value={name}
                                  onChange={(e) => setName(e.target.value)}
                            >
-                             <option value='Alege tip programare'>Alege Tip Programare </option>
+                        
                             <option value='Tuns pret 50 ron '>Tuns pret 50 ron </option>
                             <option value='Tuns + barba pret 60 ron'>Tuns + barba pret 60 ron </option>
                             <option value='Tuns copii sub 12 ani pret 40 ron'>Tuns copii sub 12 ani pret 40 ron </option>
@@ -170,8 +177,10 @@ const AppointmentComponent = () => {
                             </input>
                             
                         </div>
-
-                       
+ <div style={{ color: 'red' }}>
+      {/* Render your error message or handle it accordingly */}
+      {error}
+    </div>
                        
 
                       

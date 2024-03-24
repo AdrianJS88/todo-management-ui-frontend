@@ -22,7 +22,7 @@ const ListTodoComponent = () => {
             setTodos(response.data);
         }).catch(error => {
             console.error(error);
-        });
+        })
     }
 
     function addNewTodo(){

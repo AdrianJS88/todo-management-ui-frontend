@@ -8,6 +8,7 @@ const LoginComponent = () => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+ const [error, setError] = useState('');
 
     const navigator = useNavigate();
 
@@ -15,23 +16,22 @@ const LoginComponent = () => {
 
         e.preventDefault();
 
-        await loginAPICall(username, password).then((response) => {
+  try {
+            const response = await loginAPICall(username, password);
             console.log(response.data);
 
-            //const token = 'Basic ' + window.btoa(username + ":" + password);
             const token = 'Bearer ' + response.data.accessToken;
-
             const role = response.data.role;
             storeToken(token);
 
-            saveLoggedInUser(username ,role);
-            navigator("/todos")
+            saveLoggedInUser(username, role);
+            navigator('/todos');
 
             window.location.reload(false);
-        }).catch(error => {
+        } catch (error) {
             console.error(error);
-        })
-
+            setError('Email/nume sau parola gresita!!!');
+        }
     }
 
   return (
@@ -57,6 +57,7 @@ const LoginComponent = () => {
                       </div>
 
                       <div className='card-body'>
+                      {error && <div className="alert alert-danger">{error}</div>}
                           <form>
 
                               <div className='row mb-3'>

@@ -52,19 +52,20 @@ const ListAppointmentComponent = () => {
 
     }
 
-    function updateAppointment(id){
-        console.log(id)
-        navigate(`/update-appointment/${id}`)
-        window.location.reload(false);
-    }
-    
-    function removeAppointment(id){
-        deleteAppointment(id).then((response) => {
-            listAppointments();
-            window.location.reload(false);
-        }).catch(error => {
-            console.error(error)
+   function updateAppointment(id) {
+    navigate(`/update-appointment/${id}`);
+}
+
+function removeAppointment(id) {
+    deleteAppointment(id)
+        .then((response) => {
+            setAppointments((prevAppointments) =>
+                prevAppointments.filter((appointment) => appointment.id !== id)
+            );
         })
+        .catch((error) => {
+            console.error(error);
+        });
     }
 
 
@@ -89,18 +90,18 @@ const ListAppointmentComponent = () => {
                         <th>Appointment Type Name</th>
                         <th>Appointment Date/Time</th>
                         <th>Appointment Username</th>
-                        {/* <th>Appointment appointment_user_id</th> */}
+                 
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         appointments.map(appointment => 
-                            <tr key={appointment.id}>
+                            <tr key={appointment.id } >
                                <td>{appointment.name}</td>
-                                <td>{appointment.date_appointment}</td>
+                                <td>{appointment.date_appointment} </td>
                                  <td>{appointment.appointment_u_name}</td>
-                               {/* <td>{appointment.appointment_user_id}</td> */}
+                           
                                 <td>
                              
                               <button className='btn btn-info' onClick={() => updateAppointment(appointment.id)}>Update</button>
@@ -129,13 +130,13 @@ const ListAppointmentComponent = () => {
       value={searchTerm}
       onChange={e => setSearchTerm(e.target.value)}
     />
-    <button className="btn btn-primary" onClick={handleSearch}>Search</button>
+    <button className="btn btn-primary" onClick={handleSearch}>Programarile tale</button>
     
   </div>
 
-  <div className="container text-center-3">
+  <div className="containertext-center-3">
     <table className="table">
-      <thead className="table-dark">
+      <thead className="table">
        
         <tr>
           <th scope="col">Nume client :</th>
@@ -146,12 +147,13 @@ const ListAppointmentComponent = () => {
       </thead>
       <tbody>
         {searchResults.map(appointment => (
-          <tr key={appointment.id}>
+          <tr key={appointment.id} style={{ background:  'grey' }}>
             <td>{appointment.appointment_u_name}</td>
             <td>{appointment.name}</td>
             <td>{appointment.date_appointment}</td>
+             
             <td>
-              <button className='btn btn-info' onClick={() => updateAppointment(appointment.id)}>Update</button>
+              {/* <button className='btn btn-info' onClick={() => updateAppointment(appointment.id)}>Update</button> */}
               <button className='btn btn-danger' onClick={() => removeAppointment(appointment.id)} style={{ marginLeft: "10px" }}>Delete</button>
             </td>
           </tr>

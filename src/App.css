@@ -24,7 +24,7 @@
 }
 
 .container{
-  background-color: rgb(233, 235, 239);
+  background-color: rgb(220, 222, 227);
   
   width: 50px;
 }
@@ -112,12 +112,21 @@
 }
 
 
-.unavailable-event {
-  background-color: red;
-  cursor: not-allowed;
+/* Add green border for available dates */
+.green-border {
+ background-color: rgb(60, 179, 9); /* Culoarea de fundal roșie */
+  color: rgb(231, 233, 229); /* Text alb pe fundal roșu */
 }
 
-.available-event {
-  background-color: green; /* Change to your desired color */
+/* Add red border for unavailable dates */
+.red-border {
+   background-color: red; /* Culoarea de fundal roșie */
+  color: rgb(220, 211, 206); /* Text alb pe fundal roșu */
 }
+
+
+
+
+
+
 

@@ -29,6 +29,8 @@ axios.interceptors.request.use(function (config) {
  export const getAppointment = (id) => axios.get(BASE_REST_API_URL + '/' + id)
  
 
+ export const getIsAvailable = (isAvailable) => axios.get(BASE_REST_API_URL + '/' + isAvailable)
+
  export const updateAppointment = (id, appointment) => axios.put(BASE_REST_API_URL + '/' + id, appointment)
 
  export const deleteAppointment = (id) => axios.delete(BASE_REST_API_URL + '/' + id)
