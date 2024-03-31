@@ -153,7 +153,7 @@ function removeAppointment(id) {
             <td>{appointment.date_appointment}</td>
              
             <td>
-              {/* <button className='btn btn-info' onClick={() => updateAppointment(appointment.id)}>Update</button> */}
+              <button className='btn btn-info' onClick={() => updateAppointment(appointment.id)}>Update</button> 
               <button className='btn btn-danger' onClick={() => removeAppointment(appointment.id)} style={{ marginLeft: "10px" }}>Delete</button>
             </td>
           </tr>
